@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 
 const authRoutes = require('./routes/auth');
-// const postRoutes = require('./routes/posts');
+const postRoutes = require('./routes/posts');
 // const userRoute = require("./routes/user");
 
 
@@ -46,7 +46,7 @@ app.use(helmet());
 
 // Routes which should handle requests
 app.use("/api/auth", authRoutes);
-// app.use("/api/posts", postRoutes);
+app.use("/api/posts", postRoutes);
 // app.use("/api/users", userRoute);
 
 
