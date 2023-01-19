@@ -1,11 +1,16 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const dbConfig= require("./config/database.config");
+const dotenv = require("dotenv");
+const helmet = require("helmet");
 
-const userRoutes = require('./routes/user-route');
+const authRoutes = require('./routes/auth');
+// const postRoutes = require('./routes/posts');
+// const userRoute = require("./routes/user");
+
 
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
@@ -17,25 +22,34 @@ mongoose.connect(dbConfig.url, {
 
 mongoose.Promise = global.Promise;
 
+dotenv.config();
+
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
-  next();
-});
+app.use(express.json());
+app.use(helmet());
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   if (req.method === "OPTIONS") {
+//     res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+//     return res.status(200).json({});
+//   }
+//   next();
+// });
 
 // Routes which should handle requests
-app.use("/user", userRoutes);
+app.use("/api/auth", authRoutes);
+// app.use("/api/posts", postRoutes);
+// app.use("/api/users", userRoute);
+
+
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
