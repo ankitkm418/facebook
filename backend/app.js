@@ -9,11 +9,11 @@ const helmet = require("helmet");
 
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
-// const userRoute = require("./routes/user");
+const userRoute = require("./routes/user");
 
 
-mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
+mongoose.connect("mongodb+srv://ankitkm418:Ankit1998@cluster0.llkpgl0.mongodb.net/?retryWrites=true&w=majority", {
+  useNewUrlParser: true, useUnifiedTopology: true
 }).then(()=>{
     console.log("Database connected successfully");
 }).catch(err=>{
@@ -47,7 +47,7 @@ app.use(helmet());
 // Routes which should handle requests
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
-// app.use("/api/users", userRoute);
+app.use("/api/users", userRoute);
 
 
 
