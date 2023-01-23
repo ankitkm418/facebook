@@ -12,7 +12,8 @@ const postRoutes = require('./routes/posts');
 const userRoute = require("./routes/user");
 
 
-mongoose.connect("mongodb+srv://ankitkm418:Ankit1998@cluster0.llkpgl0.mongodb.net/?retryWrites=true&w=majority", {
+// mongoose.connect("mongodb+srv://Ankit1998:<password>@cluster0.llkpgl0.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://localhost:27017/facebook", {
   useNewUrlParser: true, useUnifiedTopology: true
 }).then(()=>{
     console.log("Database connected successfully");
