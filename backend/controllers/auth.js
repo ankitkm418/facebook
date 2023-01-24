@@ -55,19 +55,13 @@ exports.user_login = (req, res, next) => {
           });
         }
         if (result) {
-          const token = jwt.sign(
-            {
-              email: user[0].email,
-              userId: user[0]._id
-            },
-            process.env.JWT_KEY,
-            {
-              expiresIn: "1h"
-            }
-          );
+          const accessToken = generateAccessToken(user);
+          const refreshToken = generateRefreshToken(user);
+          refreshTokens.push(refreshToken);
           return res.status(200).json({
             message: "Auth successful",
-            token: token,
+            access_token: accessToken,
+            refresh_Token: refreshToken,
             user: user
           });
         }
@@ -111,3 +105,42 @@ exports.user_login = (req, res, next) => {
 // }
 
 
+let refreshTokens = [];
+
+exports.api_refresh = (req, res, next) => {
+  //take the refresh token from the user
+  const refreshToken = req.body.token;
+
+  //send error if there is no token or it's invalid
+  if (!refreshToken) return res.status(401).json("You are not authenticated!");
+  if (!refreshTokens.includes(refreshToken)) {
+    return res.status(403).json("Refresh token is not valid!");
+  }
+  jwt.verify(refreshToken, process.env.JWT_KEY, (err, user) => {
+    err && console.log(err);
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user);
+
+    refreshTokens.push(newRefreshToken);
+
+    res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    });
+  });
+
+  //if everything is ok, create new access token, refresh token and send to user
+}
+
+const generateAccessToken = (user) => {
+  console.log(user);
+  return jwt.sign({ id: user.userId, isAdmin: user.isAdmin }, process.env.JWT_KEY, {
+    expiresIn: "1m",
+  });
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign({ id: user.userId, isAdmin: user.isAdmin }, process.env.JWT_KEY);
+};
