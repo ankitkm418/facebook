@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { authReducer, metaReducers } from './shared/store/reducers';
 import { AuthGuard } from './shared/guards/auth.guard';
 
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
     BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([])
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
