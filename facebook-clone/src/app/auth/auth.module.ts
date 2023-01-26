@@ -11,6 +11,8 @@ import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from '../shared/store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from '../shared/store/effects/auth.effects';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { authReducer } from '../shared/store/reducers';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forFeature("auth", authReducer)
+    StoreModule.forFeature("auth", authReducer),
+    EffectsModule.forFeature([AuthEffects])
   ],
   providers: [AuthService]
 })

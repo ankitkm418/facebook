@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { logout } from 'src/app/shared/store/actions/auth.action';
+import { AuthState } from 'src/app/shared/store/reducers';
 
 @Component({
   selector: 'app-signup',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private store: Store<AuthState>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    const newLoginAction = logout();
+    this.store.dispatch(newLoginAction);
   }
 
 }

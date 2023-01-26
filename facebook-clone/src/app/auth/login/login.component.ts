@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, tap, map } from 'rxjs';
-import { login } from 'src/app/shared/store/actions/auth.action';
+import { login, logout } from 'src/app/shared/store/actions/auth.action';
 import { AuthState } from 'src/app/shared/store/reducers';
 import { isLoggedIn } from 'src/app/shared/store/selectors/auth.selector';
 import { AuthService } from '../auth.service';
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
 
     const newLoginAction = login({user:val});
     this.store.dispatch(newLoginAction);
+    this.router.navigateByUrl('/signup')
     // this.authService.login(val)
     //   .pipe(
     //     tap(user =>{
@@ -61,4 +62,6 @@ export class LoginComponent implements OnInit {
     //     console.log("login failed");
     //   })
   }
+
+ 
 }
