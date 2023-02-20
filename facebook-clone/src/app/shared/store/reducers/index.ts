@@ -1,5 +1,4 @@
-import { ActionReducer, ActionReducerMap, createReducer, MetaReducer, on } from "@ngrx/store";
-import { environment } from "src/environments/environment";
+import { createReducer, on } from "@ngrx/store";
 import { UserLogin } from "../../Interfaces/login.interface";
 import { AuthActions } from "../actions/action-type";
 
@@ -9,14 +8,8 @@ export interface AuthState{
 };
 
 export const initialAuthState: AuthState = {
-    user: undefined
-
+    user: undefined,
 }
-
-// export const reducers: ActionReducerMap<AuthState> = {
-
-// };
-
 
 export const authReducer = createReducer(
     initialAuthState,
@@ -34,7 +27,5 @@ export const authReducer = createReducer(
     })
     
 )
-
-export const metaReducers: MetaReducer<AuthState>[] = !environment.production ? [] : [];
 
 

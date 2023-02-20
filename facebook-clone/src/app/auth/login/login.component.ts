@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     const newLoginAction = login({user:val});
     this.store.dispatch(newLoginAction);
-    this.router.navigateByUrl('/signup')
+    this.router.navigateByUrl('/test')
     // this.authService.login(val)
     //   .pipe(
     //     tap(user =>{

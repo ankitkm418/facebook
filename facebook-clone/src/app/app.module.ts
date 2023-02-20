@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-// import { authReducer, metaReducers, reducers } from './shared/store/reducers';
 import { AuthGuard } from './shared/guards/auth.guard';
 
 import { EffectsModule } from '@ngrx/effects';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { metaReducers, reducers } from './shared/store/reducers/reducermap';
 
 
 @NgModule({
