@@ -1,22 +1,29 @@
 const nodemailer = require("nodemailer");
+const otpGenerator = require('otp-generator')
 
 const sendMail = async (email, sub, text) =>{
+    const otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+      lowerCaseAlphabets: false
+    });
+
     try{
         const transporter = nodemailer.createTransport({
-            host: process.env.HOST,
-            service: process.env.SERVICE,
+            host: "smtp.ethereal.email",
+            // service: process.env.SERVICE,
             port: 587,
-            secure: true,
+            // secure: true,
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS
-            },
+                user: 'derick35@ethereal.email',
+                pass: 'hNQRKydKzJHJyxgU9b'
+            }
         });
 
         await transporter.sendMail({
-            from: process.env.USER,
+            from: "smtp.ethereal.email",
             to: email,
-            subject: sub,
+            subject: "OTP for registration is " + otp,
             text: text
         });
 
